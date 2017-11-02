@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Snake Game v2.523</title>
+</head>
+<body>
+<canvas id="myCanvas" width= "" height= "" style="border:1px solid #FFDC4A;background-color: SteelBlue; 
+"></canvas>
+<canvas id="canvas" width = "00" height = "00"></canvas>
+<script>
+var sun = new Image();
+var moon = new Image();
+var earth = new Image();
+function init() {
+  sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
+  moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
+  earth.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
+  window.requestAnimationFrame(draw);
+}
+
+function draw() {
+  var ctx = document.getElementById('canvas').getContext('2d');
+
+  ctx.globalCompositeOperation = 'destination-over';
+  ctx.clearRect(0, 0, 300, 300); // clear canvas
+
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+  ctx.strokeStyle = 'rgba(0, 153, 255, 0.4)';
+  ctx.save();
+  ctx.translate(150, 150);
+
+  // Earth
+  var time = new Date();
+  ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());
+  ctx.translate(105, 0);
+  ctx.fillRect(0, -12, 50, 24); // Shadow
+  ctx.drawImage(earth, -12, -12);
+
+  // Moon
+  ctx.save();
+  ctx.rotate(((2 * Math.PI) / 6) * time.getSeconds() + ((2 * Math.PI) / 6000) * time.getMilliseconds());
+  ctx.translate(0, 28.5);
+  ctx.drawImage(moon, -3.5, -3.5);
+  ctx.restore();
+
+  ctx.restore();
+  
+  ctx.beginPath();
+  ctx.arc(150, 150, 105, 0, Math.PI * 2, false); // Earth orbit
+  ctx.stroke();
+ 
+  ctx.drawImage(sun, 0, 0, 300, 300);
+
+  window.requestAnimationFrame(draw);
+}
+
+init();
+</script>
+
+<script>
+//var BackroundColor = prompt("What do you want the backround color. For tech nerds: use CSS color scemes.")
+function FPS(){
+var FPS = parseInt(prompt("What do you want your fps? if you set the FPS higher than 30, it get's REALLY fast!"))
+}
+var FPS = parseInt(prompt("What do you want your fps? if you set the FPS higher than 30, it get's REALLY fast!"))
+var tail = []
+var pause = false
+var tailadd = new Object({
+            Xpos : -10, 
+            Ypos : -10,
+            direction : 0,
+        })
+        tail.push(tailadd)
+//The fps is how fast the snake moves, 10 FPS is defaut and gives
+//it a retro look
+var canvas = document.getElementById("myCanvas")
+var ctx = canvas.getContext("2d")
+var plrX = 50
+var plrY = 50
+var red = "#FF0000"
+var black = "#000000"
+var rX = Math.floor(Math.random() * canvas.width/10)*10
+var rY = Math.floor(Math.random() * canvas.height/9)*10+20
+var rX2 = 60
+var rY2 = 0
+var score = 0
+var spdX = 10
+var spdY = 0
+var Dir = 180;
+var width = canvas.style.width
+var height = canvas.style.height
+function start(){
+	plrX = 50
+    plrY = 0
+    red = "#FF0000"
+    black = "#000000"
+    rX = 50
+    rY = 0
+  	rX2 = 50
+    rY2 = 0
+    score = -2
+    frame()
+}
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+function fruit(){
+	if(rX != plrX || rY != plrY){
+    	ctx.fillStyle = "red"
+		ctx.fillRect(rX, rY, 10, 10)
+        
+    }else{
+    	rX = Math.floor(Math.random() * canvas.width/10-20)*10
+        while(rX < 20){
+            rX = Math.floor(Math.random() * canvas.width/10-20)*10
+        }
+		rY = Math.floor(Math.random() * canvas.height/10)*10+20
+		ctx.fillStyle = "red"
+		ctx.fillRect(rX, rY, 10, 10)
+        score ++
+        var tailadd = new Object({
+            Xpos : -10, 
+            Ypos : -10,
+            direction : 0,
+        })
+        tail.push(tailadd)
+    }
+}
+function fullscreen(){
+	canvas.requestFullScreen()
+}
+//HERE GETS CALLED AS FRAMES!!!
+setInterval(
+function(){
+    console.log("X=" + rX + "Y=" + rY)
+    ctx.canvas.width  = Math.floor(window.innerWidth/10)*10;
+    ctx.canvas.height = Math.floor(window.innerHeight/10)*10;
+    ctx.clearRect(0, 0, 2000, 1000)
+    if(pause == false){
+    for(var i = tail.length; i>0;i--){
+            if(i!=1){
+                tail[i-1].direction=tail[i-2].direction;
+            } else{
+                tail[0].direction = Dir;
+            }
+            
+        }
+        for(var i = 0; i<tail.length; i++){
+            if(tail[i].Xpos != plrX || tail[i].Ypos != plrY){
+        }else{
+            score=0
+            var tailadd = new Object({
+            Xpos : -10, 
+            Ypos : -10,
+            direction : 0,
+        })
+        tail.push(tailadd)
+            for(var v = 0; v <tail.length; v++){
+                tail.pop()
+            }
+        }
+            if(i==0){
+                tail[i].Xpos=plrX
+                tail[i].Ypos=plrY
+            }else{
+                
+                if(tail[i].direction==0){
+                    
+                    tail[i].Xpos=tail[i-1].Xpos+0;
+                    tail[i].Ypos=tail[i-1].Ypos+10;
+                }else if(tail[i].direction==180){
+                    
+                        tail[i].Xpos=tail[i-1].Xpos+0;
+                        tail[i].Ypos=tail[i-1].Ypos-10;
+                }else if(tail[i].direction==90){
+                    
+                        tail[i].Xpos=tail[i-1].Xpos-10;
+                        tail[i].Ypos=tail[i-1].Ypos+0;
+                }else if(tail[i].direction==270){
+                    
+                        tail[i].Xpos=tail[i-1].Xpos+10;
+                        tail[i].Ypos=tail[i-1].Ypos+0;
+                }
+                
+            }
+            
+        }
+    
+    
+	plrX = plrX + spdX
+    plrY = plrY + spdY
+    }
+	if(plrX < 0){
+    	plrX=0
+    }
+    if(plrX > Math.floor(canvas.width/10)*10-10){
+    	plrX = Math.floor(canvas.width/10)*10-10
+    }
+	if(plrY < 20){
+    	plrY=20
+    }
+    if(plrY > Math.floor(canvas.height/10)*10-10){
+    	plrY = Math.floor(canvas.height/10)*10-10
+    }
+    fruit()
+    ctx.fillStyle = "#FFDC4A"
+    ctx.fillRect(0, 20, window.innerWidth, 1)
+    ctx.fillStyle = "#FFFFFF"
+    ctx.font = "oblique small-caps bold 20px sans-serif";
+	ctx.fillText(score.toString(),10,22);
+    for(var i = 0; i<tail.length; i++){
+    	
+        X = tail[i].Xpos
+        Y = tail[i].Ypos
+        if(i % 5 == 0){
+        ctx.fillStyle = "coral"
+        }else{
+        if(i % 4 == 0){
+        ctx.fillStyle = "tomato"
+        }else{
+        if(i % 3 == 0){
+        ctx.fillStyle = "OrangeRed"
+        }else{
+        if(i % 2 == 0){
+        ctx.fillStyle = "DarkOrange"
+        }else{
+        ctx.fillStyle = "orange"
+        }
+        }
+        }
+        }
+        ctx.fillRect(X, Y, 10, 10)
+    }
+    //color of head
+    ctx.fillStyle = "darkred"
+    ctx.fillRect(plrX, plrY, 10, 10)
+   
+}
+, 1000/FPS);
+
+
+document.onkeydown = function (e) {
+    e = e || window.event;
+    if(e.keyCode == 87){
+    spdY=0
+    	spdY = spdY - 10
+        spdX = 0
+        Dir = 0
+    }
+    if(e.keyCode == 83){
+    spdY=0
+    	spdY = spdY + 10
+        spdX = 0
+        Dir = 180
+    }
+    if(e.keyCode == 65){
+    spdX = 0
+    	spdX = spdX - 10
+        spdY = 0
+        Dir = 270
+    }
+    if(e.keyCode == 68){
+    spdX = 0
+    	spdX = spdX + 10
+        spdY = 0
+        Dir = 90
+    }
+    if(e.metaKey == true){
+        alert("welcom to hacking central where we hack things that can be hacked")
+    }
+    if(e.keyCode == 80){
+    	if(pause == false){
+        pause = true
+        }else{
+        pause = false
+        }
+    }
+    if(e.keyCode == 82){
+        var FPS = parseInt(prompt('What do you want your fps? if you set the FPS higher than 30, it gets REALLY fast!'))
+    }
+    
+};
+function updates(){
+    alert("Added colors to snake, fixed bugs, added pause button 'P' and I made the number thing a bit better, so yeah, if you want more in the future be sure to give me suggestions, I am working on image and scaling it to fit the screen, so be sure to find that soon, THX for the support!")
+}
+        
+    
+    
+    
+    
+
+
+
+</script>
+    <input type="button" value="Click for update notes" onclick="updates()"
+    </body>
+</html>
+
+
