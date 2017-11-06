@@ -3,63 +3,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Snake Game v2.523</title>
+<title>Snake Game v3D!</title>
 </head>
 <body>
-<canvas id="myCanvas" width= "" height= "" style="border:1px solid #FFDC4A;background-color: SteelBlue; 
+<canvas id="myCanvas" width= "" height= "600" style="border:1px solid #FFDC4A;background-color: SteelBlue; 
 "></canvas>
 <canvas id="canvas" width = "00" height = "00"></canvas>
-<script>
-var sun = new Image();
-var moon = new Image();
-var earth = new Image();
-function init() {
-  sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
-  moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
-  earth.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
-  window.requestAnimationFrame(draw);
-}
 
-function draw() {
-  var ctx = document.getElementById('canvas').getContext('2d');
-
-  ctx.globalCompositeOperation = 'destination-over';
-  ctx.clearRect(0, 0, 300, 300); // clear canvas
-
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
-  ctx.strokeStyle = 'rgba(0, 153, 255, 0.4)';
-  ctx.save();
-  ctx.translate(150, 150);
-
-  // Earth
-  var time = new Date();
-  ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());
-  ctx.translate(105, 0);
-  ctx.fillRect(0, -12, 50, 24); // Shadow
-  ctx.drawImage(earth, -12, -12);
-
-  // Moon
-  ctx.save();
-  ctx.rotate(((2 * Math.PI) / 6) * time.getSeconds() + ((2 * Math.PI) / 6000) * time.getMilliseconds());
-  ctx.translate(0, 28.5);
-  ctx.drawImage(moon, -3.5, -3.5);
-  ctx.restore();
-
-  ctx.restore();
-  
-  ctx.beginPath();
-  ctx.arc(150, 150, 105, 0, Math.PI * 2, false); // Earth orbit
-  ctx.stroke();
- 
-  ctx.drawImage(sun, 0, 0, 300, 300);
-
-  window.requestAnimationFrame(draw);
-}
-
-init();
-</script>
 
 <script>
+function fill3D(X, Y, width, height, color){
+	ctx.fillStyle = "black"
+    ctx.fillRect(X-1, Y-1, width+2, height+2)
+    ctx.fillRect(X-1, Y+ height, width+2, height/2+2)
+    ctx.fillStyle = color
+    ctx.fillRect(X, Y, width, height)
+    ctx.fillRect(X, Y+ height+1, width, height/2)
+    
+}
 //var BackroundColor = prompt("What do you want the backround color. For tech nerds: use CSS color scemes.")
 function FPS(){
 var FPS = parseInt(prompt("What do you want your fps? if you set the FPS higher than 30, it get's REALLY fast!"))
@@ -108,8 +69,8 @@ function random(min, max) {
 }
 function fruit(){
 	if(rX != plrX || rY != plrY){
-    	ctx.fillStyle = "red"
-		ctx.fillRect(rX, rY, 10, 10)
+    	var color = "red"
+		fill3D(rX, rY, 10, 10, color)
         
     }else{
     	rX = Math.floor(Math.random() * canvas.width/10-20)*10
@@ -117,8 +78,8 @@ function fruit(){
             rX = Math.floor(Math.random() * canvas.width/10-20)*10
         }
 		rY = Math.floor(Math.random() * canvas.height/10)*10+20
-		ctx.fillStyle = "red"
-		ctx.fillRect(rX, rY, 10, 10)
+		var color = "red"
+		fill3D(rX, rY, 10, 10, color)
         score ++
         var tailadd = new Object({
             Xpos : -10, 
@@ -136,7 +97,7 @@ setInterval(
 function(){
     console.log("X=" + rX + "Y=" + rY)
     ctx.canvas.width  = Math.floor(window.innerWidth/10)*10;
-    ctx.canvas.height = Math.floor(window.innerHeight/10)*10;
+    //ctx.canvas.height = Math.floor(window.innerHeight/10)*10;
     ctx.clearRect(0, 0, 2000, 1000)
     if(pause == false){
     for(var i = tail.length; i>0;i--){
@@ -215,27 +176,27 @@ function(){
         X = tail[i].Xpos
         Y = tail[i].Ypos
         if(i % 5 == 0){
-        ctx.fillStyle = "coral"
+        var color = "coral"
         }else{
         if(i % 4 == 0){
-        ctx.fillStyle = "tomato"
+        var color = "tomato"
         }else{
         if(i % 3 == 0){
-        ctx.fillStyle = "OrangeRed"
+        var color = "OrangeRed"
         }else{
         if(i % 2 == 0){
-        ctx.fillStyle = "DarkOrange"
+        var color = "DarkOrange"
         }else{
-        ctx.fillStyle = "orange"
+        var color = "orange"
         }
         }
         }
         }
-        ctx.fillRect(X, Y, 10, 10)
+        fill3D(X, Y, 10, 10, color)
     }
     //color of head
-    ctx.fillStyle = "darkred"
-    ctx.fillRect(plrX, plrY, 10, 10)
+    var color = "darkred"
+    fill3D(plrX, plrY, 10, 10, color)
    
 }
 , 1000/FPS);
@@ -280,10 +241,13 @@ document.onkeydown = function (e) {
     if(e.keyCode == 82){
         var FPS = parseInt(prompt('What do you want your fps? if you set the FPS higher than 30, it gets REALLY fast!'))
     }
+    if(e.keyCode == 9){
+    	alert("X=" + rX + "Y=" + rY)
+    }
     
 };
 function updates(){
-    alert("Added colors to snake, fixed bugs, added pause button 'P' and I made the number thing a bit better, so yeah, if you want more in the future be sure to give me suggestions, I am working on image and scaling it to fit the screen, so be sure to find that soon, THX for the support!")
+    alert("3D!!!!, 2player function use ijkl")
 }
         
     
@@ -297,5 +261,7 @@ function updates(){
     <input type="button" value="Click for update notes" onclick="updates()"
     </body>
 </html>
+
+
 
 
