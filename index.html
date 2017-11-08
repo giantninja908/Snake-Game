@@ -245,6 +245,13 @@ document.onkeydown = function (e) {
     if(e.keyCode == 9){
     	alert("X=" + rX + "Y=" + rY)
     }
+	if(e.keyCode == 82){
+		rX = Math.floor(Math.random() * canvas.width/10-20)*10
+        while(rX < 20){
+            rX = Math.floor(Math.random() * canvas.width/10-20)*10
+        }
+		rY = Math.floor(Math.random() * canvas.height/10)*10+20
+	}
     
 };
 function updates(){
