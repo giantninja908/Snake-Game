@@ -265,6 +265,12 @@ document.onkeydown = function (e) {
 	}
     
 };
+document.onmousedown = function(){
+Dir += 90
+if(Dir == 360){
+	Dir = 0
+}
+}
 function updates(){
     alert("3D!!!!, 2player function use ijkl")
 }
