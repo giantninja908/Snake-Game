@@ -208,25 +208,25 @@ function(){
 
 document.onkeydown = function (e) {
     e = e || window.event;
-    if(e.keyCode == 87){
+    if(e.keyCode == 87||e.keyCode == 38){
     spdY=0
     	spdY = spdY - 10
         spdX = 0
         Dir = 0
     }
-    if(e.keyCode == 83){
+    if(e.keyCode == 83|| e.keyCode == 40){
     spdY=0
     	spdY = spdY + 10
         spdX = 0
         Dir = 180
     }
-    if(e.keyCode == 65){
+    if(e.keyCode == 65||e.keyCode == 37){
     spdX = 0
     	spdX = spdX - 10
         spdY = 0
         Dir = 270
     }
-    if(e.keyCode == 68){
+    if(e.keyCode == 68||e.keyCode == 39){
     spdX = 0
     	spdX = spdX + 10
         spdY = 0
