@@ -24,9 +24,7 @@ function fill3D(X, Y, width, height, color){
     
 }
 //var BackroundColor = prompt("What do you want the backround color. For tech nerds: use CSS color scemes.")
-function FPS(){
-var FPS = parseInt(prompt("What do you want your fps? if you set the FPS higher than 30, it get's REALLY fast!"))
-}
+
 var FPS = parseInt(prompt("What do you want your fps? if you set the FPS higher than 30, it get's REALLY fast!"))
 var tail = []
 var pause = false
@@ -203,7 +201,7 @@ function(){
     fill3D(plrX, plrY, 10, 10, color)
    
 }
-, 1000/20);
+, 1000/FPS);
 
 
 document.onkeydown = function (e) {
@@ -266,14 +264,6 @@ if(Dir == 360){
 function updates(){
     alert("3D!!!!, 2player function use ijkl")
 }
-        
-    
-    
-    
-    
-
-
-
 </script>
     
     </body>
